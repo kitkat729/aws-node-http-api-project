@@ -4,3 +4,11 @@ jspm_packages
 
 # Serverless directories
 .serverless
+
+# IDE
+**/.idea
+**/.vscode
+
+# OS
+.DS_Store
+.tmp
