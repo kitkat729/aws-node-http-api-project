@@ -4,8 +4,9 @@ service: aws-node-http-api-project
 frameworkVersion: '3'
 
 plugins:
+  - serverless-plugin-typescript
   - serverless-offline
-
+  
 provider:
   name: aws
   runtime: nodejs14.x
@@ -23,13 +24,13 @@ provider:
 
 functions:
   createCustomer:
-    handler: createCustomer.createCustomer
+    handler: createCustomer.default
     events:
       - httpApi:
           path: /
           method: post
   getCustomers:
-    handler: getCustomers.getCustomers
+    handler: getCustomers.default
     events:
       - httpApi:
           path: /
