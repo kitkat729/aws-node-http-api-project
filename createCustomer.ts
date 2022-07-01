@@ -1,16 +1,20 @@
-'use strict'
-const AWS = require('aws-sdk')
+import { DynamoDB } from 'aws-sdk'
 
-module.exports.createCustomer = async (event) => {
+type CreateCustomerResult = {
+  statusCode: number;
+}
+
+const dynamoDb = new DynamoDB.DocumentClient()
+
+export default async (event): Promise<CreateCustomerResult> => {
   const body = JSON.parse(Buffer.from(event.body, 'base64').toString())
-  const dynamoDb = new AWS.DynamoDB.DocumentClient()
   const putParams = {
     TableName: process.env.DYNAMODB_CUSTOMER_TABLE,
     Item: {
       primary_key: body.name,
       email: body.email
     }
-  }
+  } as DynamoDB.DocumentClient.PutItemInput
 
   await dynamoDb.put(putParams).promise()
 
