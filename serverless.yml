@@ -24,16 +24,16 @@ provider:
 
 functions:
   createCustomer:
-    handler: createCustomer.default
+    handler: functions/customers/createCustomer.default
     events:
       - httpApi:
-          path: /
+          path: /customers
           method: post
   getCustomers:
-    handler: getCustomers.default
+    handler: functions/customers/getCustomers.default
     events:
       - httpApi:
-          path: /
+          path: /customers
           method: get
 
 resources:

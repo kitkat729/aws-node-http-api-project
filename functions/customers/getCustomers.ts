@@ -1,11 +1,12 @@
 import { DynamoDB } from 'aws-sdk'
+import { APIGatewayProxyResultV2 } from 'aws-lambda'
+import { ProxyHandler } from './types'
 
-type GetCustomersResult = {
-  statusCode: number;
-  body?: string;
-}
-
-export default async (): Promise<GetCustomersResult> => {
+/**
+ * Get all customers
+ * @returns {APIGatewayProxyResultV2}
+ */
+const handler: ProxyHandler = async (): Promise<APIGatewayProxyResultV2> => {
   const dynamoDb = new DynamoDB.DocumentClient()
   const scanParams = {
     TableName: process.env.DYNAMODB_CUSTOMER_TABLE
@@ -13,15 +14,9 @@ export default async (): Promise<GetCustomersResult> => {
 
   const result: DynamoDB.DocumentClient.ScanOutput = await dynamoDb.scan(scanParams).promise()
 
-  if (result.Count === 0) {
-    return {
-      statusCode: 404
-    }
-  }
-
   return {
-    statusCode: 200,  
-    body: JSON.stringify({
+    "statusCode": 200,
+    "body": JSON.stringify({
       total: result.Count,
       items: await result.Items?.map(customer => {
         return {
@@ -32,3 +27,5 @@ export default async (): Promise<GetCustomersResult> => {
     })
   }
 }
+
+export default handler
