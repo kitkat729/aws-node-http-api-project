@@ -9,7 +9,11 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "lib": ["es2020"],
-    "rootDir": "./"
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "functions/": ["*"]
+    }
   },
   "exclude": [".vscode", ".serverless", ".git", "node_modules"]
 }

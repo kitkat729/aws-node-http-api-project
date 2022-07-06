@@ -18,6 +18,8 @@ This template does not initially include any kind of persistence (database). For
 
 The template setup AWS with Node 14.x runtime in serverless.yml
 
+The HttpApi integration implements APIGateway V2
+
 ## Usage
 
 ### Deployment
@@ -92,3 +94,30 @@ serverless offline
 ```
 
 To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
+
+### Custom headers
+Lambda function can return custom headers by adding a `headers` property to the return object
+
+```
+{
+  statusCode: 200,
+  headers: {
+    "x-custom-1": "value-1",
+    "x-custom-2": "value-2"
+  }
+  body: JSON.stringify({...})
+}
+```
+
+### Api path
+To assign a named resource path to an api, update the httpApi's path attribute in `serverless.yml`
+
+```
+functions:
+  createCustomer:
+    handler: createCustomer.default
+    events:
+      - httpApi:
+          path: /<resource-name>
+```
+
