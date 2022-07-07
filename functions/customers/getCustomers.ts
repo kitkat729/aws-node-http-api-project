@@ -23,7 +23,7 @@ const handler: ProxyHandler = async (): Promise<APIGatewayProxyResultV2> => {
           name: customer.primary_key,
           email: customer.email
         }
-      }) 
+      })
     })
   }
 }
