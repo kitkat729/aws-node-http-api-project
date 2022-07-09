@@ -1,18 +1,17 @@
 import { DynamoDB } from 'aws-sdk'
-import { Context, APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda'
-import { ProxyHandler } from './types'
+import { APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda'
 
 const dynamoDb = new DynamoDB.DocumentClient()
 
 /**
- * Create Customer handler. Handler accepts request content-type 'application/json' and 'application/x-www-form-urlencoded'
+ * Create Customer handler. Create data if data not yet existed or append data to existing data.
+ * Handler can handle request content-type 'application/json' and 'application/x-www-form-urlencoded'
  * @param {APIGatewayProxyEventV2} event - API event
  * @param {Context} context - Request context
  * @returns {APIGatewayProxyResultV2}
  */
-const handler: ProxyHandler = async (event: APIGatewayProxyEventV2, context: Context): Promise<APIGatewayProxyResultV2> => {
-console.log('event=%o', event)
-  if (!event.body) {
+const handler: APIGatewayProxyHandlerV2 = async (event, context): Promise<APIGatewayProxyResultV2> => {
+  if (!event?.body) {
     return {
       "statusCode": 400
     }
