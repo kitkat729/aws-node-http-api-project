@@ -41,8 +41,8 @@ functions:
       - httpApi:
           path: /customers/{customerId}
           method: get
-  getCustomers:
-    handler: functions/customers/getCustomers.default
+  listCustomers:
+    handler: functions/customers/listCustomers.default
     events:
       - httpApi:
           path: /customers
