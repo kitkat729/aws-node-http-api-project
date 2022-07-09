@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB, AWSError } from 'aws-sdk'
 import { APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda'
 
 /**
@@ -11,20 +11,34 @@ const handler: APIGatewayProxyHandlerV2 = async (): Promise<APIGatewayProxyResul
     TableName: process.env.DYNAMODB_CUSTOMER_TABLE
   } as DynamoDB.DocumentClient.ScanInput
 
-  const result: DynamoDB.DocumentClient.ScanOutput = await dynamoDb.scan(scanParams).promise()
+  let response
 
-  return {
-    "statusCode": 200,
-    "body": JSON.stringify({
-      total: result.Count,
-      items: await result.Items?.map(customer => {
-        return {
-          name: customer.primary_key,
-          email: customer.email
-        }
-      })
+  await dynamoDb.scan(scanParams).promise()
+    .then(result => {
+      response = {
+        "statusCode": 200,
+        "body": JSON.stringify({
+          total: result.Count,
+          items: result.Items?.map(customer => {
+            const {primary_key: name, ...rest} = customer
+            return {
+              name: name,
+              ...rest
+            }
+          })
+        })
+      }      
     })
-  }
+    .catch((err: AWSError) => {
+      response = {
+        "statusCode": 500,
+        "body": JSON.stringify({
+          "code": "InternalServerError"
+        })
+      }
+    })
+
+  return await response
 }
 
 export default handler
