@@ -29,6 +29,18 @@ functions:
       - httpApi:
           path: /customers
           method: post
+  deleteCustomer:
+    handler: functions/customers/deleteCustomer.default
+    events:
+      - httpApi:
+          path: /customers/{customerId}
+          method: delete
+  getCustomer:
+    handler: functions/customers/getCustomer.default
+    events:
+      - httpApi:
+          path: /customers/{customerId}
+          method: get
   getCustomers:
     handler: functions/customers/getCustomers.default
     events:
