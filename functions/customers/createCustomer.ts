@@ -48,10 +48,11 @@ const handler: APIGatewayProxyHandlerV2 = async (event, context): Promise<APIGat
   // putItem will replace existing item with new item 
   await dynamoDb.put(putParams).promise()
     .then(result => {
+      const newResourceLocation = `/customers/${encodeURIComponent(primary_key)}`
       response = {
         "statusCode": 201,
         "headers": {
-          "Location": "new-resource-location" 
+          "Location": newResourceLocation 
         }
       }
     })
