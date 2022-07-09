@@ -1,12 +1,11 @@
 import { DynamoDB } from 'aws-sdk'
-import { APIGatewayProxyResultV2 } from 'aws-lambda'
-import { ProxyHandler } from './types'
+import { APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda'
 
 /**
  * Get all customers
  * @returns {APIGatewayProxyResultV2}
  */
-const handler: ProxyHandler = async (): Promise<APIGatewayProxyResultV2> => {
+const handler: APIGatewayProxyHandlerV2 = async (): Promise<APIGatewayProxyResultV2> => {
   const dynamoDb = new DynamoDB.DocumentClient()
   const scanParams = {
     TableName: process.env.DYNAMODB_CUSTOMER_TABLE
