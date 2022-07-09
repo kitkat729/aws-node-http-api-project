@@ -126,12 +126,20 @@ curl --url http://localhost:3000/customers -i -H 'Content-Type: application/json
 
 Get example 
 ```
+<<<<<<< HEAD
 curl --url http://localhost:3000/customers/Customer%2022 -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+=======
+curl --url "http://localhost:3000/customers/Customer%2022" -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+>>>>>>> RD-3 update documentation
 ```
 
 Delete example
 ```
+<<<<<<< HEAD
 curl --url http://localhost:3000/customers/Customer25 -X DELETE -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+=======
+curl --url "http://localhost:3000/customers/Customer25" -X DELETE -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+>>>>>>> RD-3 update documentation
 ```
 
 The GET /customers/Customer%2022 response should look similar to the following:
