@@ -9,7 +9,11 @@ plugins:
   
 provider:
   name: aws
+<<<<<<< HEAD
   runtime: nodejs16.x
+=======
+  runtime: nodejs14.x
+>>>>>>> RD-3 updated deprecated IAM syntax
   iam:
     role:
       statements:
