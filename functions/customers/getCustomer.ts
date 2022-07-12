@@ -15,8 +15,13 @@ const handler: APIGatewayProxyHandlerV2 = async (event, context) : Promise<APIGa
   const primary_key = event?.pathParameters?.customerId
 
   if (!primary_key) {
-    // Not meant for HTTP
-    throw new Error("customerId must not be empty")
+    return {
+      "statusCode": 400,
+      "body": JSON.stringify({
+        "code": "MissingPathParameter",
+        "errorMessage": "`customerId` is required"
+      })
+    }
   }
 
   const dbClient = new DynamoDBClient({})
