@@ -10,15 +10,17 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - 'dynamodb:PutItem'
-        - 'dynamodb:Get*'
-        - 'dynamodb:Scan*'
-        - 'dynamodb:UpdateItem'
-        - 'dynamodb:DeleteItem'
-      Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-customerTable-${sls:stage}
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Get*'
+            - 'dynamodb:Scan*'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-customerTable-${sls:stage}
   environment:
     DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
 
