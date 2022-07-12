@@ -1,11 +1,12 @@
-import { DynamoDB, AWSError } from 'aws-sdk'
+import { AWSError } from 'aws-sdk'
 import { APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda'
-
-const dynamoDb = new DynamoDB.DocumentClient()
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
+import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb'
+import { DEFAULT_DOCUMENT_TRANSLATE_CONFIG } from '../../constants/dynamodb'
 
 /**
- * Create Customer handler. Create data if data not yet existed or append data to existing data.
- * Handler can handle request content-type 'application/json' and 'application/x-www-form-urlencoded'
+ * Create Customer handler. Create data or replace existing data.
+ *
  * @param {APIGatewayProxyEventV2} event - API event
  * @param {Context} context - Request context
  * @returns {APIGatewayProxyResultV2}
@@ -27,26 +28,29 @@ const handler: APIGatewayProxyHandlerV2 = async (event, context): Promise<APIGat
     return {
       "statusCode": 400,
       "body": JSON.stringify({
-        "code": "MissingParameter",
+        "code": "MissingInput",
         "errorMessage": "`name` is required"
       })
     }
   }
 
+  const dbClient = new DynamoDBClient({})
+  const dbDocClient = DynamoDBDocumentClient.from(dbClient, DEFAULT_DOCUMENT_TRANSLATE_CONFIG)
+
   const {name: primary_key, ...rest} = customer;
-  const putParams = {
+  const command = new PutCommand({
     TableName: process.env.DYNAMODB_CUSTOMER_TABLE,
     Item: {
       primary_key: primary_key,
       ...rest
     },
-  } as DynamoDB.DocumentClient.PutItemInput
+  })
 
   let response
 
   // dynamoDb immediately throws an error for invalid input
   // putItem will replace existing item with new item 
-  await dynamoDb.put(putParams).promise()
+  await dbDocClient.send(command)
     .then(result => {
       const newResourceLocation = `/customers/${encodeURIComponent(primary_key)}`
       response = {
@@ -63,6 +67,9 @@ const handler: APIGatewayProxyHandlerV2 = async (event, context): Promise<APIGat
           "code": "InternalServerError"
         })
       }
+    })
+    .finally(() => {
+      dbClient.destroy()
     })
 
   return await response

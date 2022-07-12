@@ -1,19 +1,27 @@
-import { DynamoDB, AWSError } from 'aws-sdk'
+import { AWSError } from 'aws-sdk'
 import { APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda'
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
+import { DynamoDBDocumentClient, ScanCommand } from '@aws-sdk/lib-dynamodb'
+import { DEFAULT_DOCUMENT_TRANSLATE_CONFIG } from '../../constants/dynamodb'
 
 /**
  * List customers
+ *
+ * @param {APIGatewayProxyEventV2} event - API event
+ * @param {Context} context - Request context
  * @returns {APIGatewayProxyResultV2}
  */
 const handler: APIGatewayProxyHandlerV2 = async (): Promise<APIGatewayProxyResultV2> => {
-  const dynamoDb = new DynamoDB.DocumentClient()
-  const scanParams = {
+  const dbClient = new DynamoDBClient({})
+  const dbDocClient = DynamoDBDocumentClient.from(dbClient, DEFAULT_DOCUMENT_TRANSLATE_CONFIG)
+
+  const command = new ScanCommand({
     TableName: process.env.DYNAMODB_CUSTOMER_TABLE
-  } as DynamoDB.DocumentClient.ScanInput
+  })
 
   let response
 
-  await dynamoDb.scan(scanParams).promise()
+  await dbDocClient.send(command)
     .then(result => {
       response = {
         "statusCode": 200,
@@ -25,7 +33,7 @@ const handler: APIGatewayProxyHandlerV2 = async (): Promise<APIGatewayProxyResul
               name: name,
               ...rest
             }
-          })
+          }) || []
         })
       }      
     })
@@ -36,6 +44,9 @@ const handler: APIGatewayProxyHandlerV2 = async (): Promise<APIGatewayProxyResul
           "code": "InternalServerError"
         })
       }
+    })
+    .finally(() => {
+      dbClient.destroy()
     })
 
   return await response
