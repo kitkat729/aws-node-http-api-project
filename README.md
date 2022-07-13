@@ -126,28 +126,13 @@ curl --url http://localhost:3000/customers -i -H 'Content-Type: application/json
 
 Get example 
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 curl --url http://localhost:3000/customers/Customer%2022 -i -H 'Content-Type: application/json' -H 'Accept: application/json'
-=======
-curl --url "http://localhost:3000/customers/Customer%2022" -i -H 'Content-Type: application/json' -H 'Accept: application/json'
->>>>>>> RD-3 update documentation
-=======
-curl --url http://localhost:3000/customers/Customer%2022 -i -H 'Content-Type: application/json' -H 'Accept: application/json'
->>>>>>> RD-3 updated docs
+
 ```
 
 Delete example
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 curl --url http://localhost:3000/customers/Customer25 -X DELETE -i -H 'Content-Type: application/json' -H 'Accept: application/json'
-=======
-curl --url "http://localhost:3000/customers/Customer25" -X DELETE -i -H 'Content-Type: application/json' -H 'Accept: application/json'
->>>>>>> RD-3 update documentation
-=======
-curl --url http://localhost:3000/customers/Customer25 -X DELETE -i -H 'Content-Type: application/json' -H 'Accept: application/json'
->>>>>>> RD-3 updated docs
 ```
 
 The GET /customers/Customer%2022 response should look similar to the following:
@@ -184,8 +169,4 @@ functions:
 
 ### Common issues
 - Get an error like below when calling API locally. It is because the local built output is missing. Make sure to run `serverless offline start` on a separate command console.
-<<<<<<< HEAD
 {"errorMessage":"ENOENT: no such file or directory, scandir '/Users/hyuen/repos/aws-node-http-api-project/.build/functions/customers'",
-=======
-{"errorMessage":"ENOENT: no such file or directory, scandir '/Users/hyuen/repos/aws-node-http-api-project/.build/functions/customers'",
->>>>>>> RD-3 updated docs
