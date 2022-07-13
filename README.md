@@ -12,9 +12,11 @@ authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
 
 # Serverless Framework Node HTTP API on AWS
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+This project is built off of Serverless Framework Node HTTP API template intended to run on AWS Lambda and API Gateway v2.
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+This template does not initially include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+
+The template setup AWS with Node 14.x runtime in serverless.yml
 
 ## Usage
 
