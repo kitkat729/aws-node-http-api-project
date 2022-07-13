@@ -1,4 +1,8 @@
 {
+  "name": "aws-node-http-api-project",
+  "description": "A test project based on Serverless Framework Node HTTP API template",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "test": "jest --config jest/jest.config.ts"
   },
