@@ -9,16 +9,18 @@ plugins:
   
 provider:
   name: aws
-  runtime: nodejs14.x
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - 'dynamodb:PutItem'
-        - 'dynamodb:Get*'
-        - 'dynamodb:Scan*'
-        - 'dynamodb:UpdateItem'
-        - 'dynamodb:DeleteItem'
-      Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-customerTable-${sls:stage}
+  runtime: nodejs16.x
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Get*'
+            - 'dynamodb:Scan*'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-customerTable-${sls:stage}
   environment:
     DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
 
@@ -29,8 +31,20 @@ functions:
       - httpApi:
           path: /customers
           method: post
-  getCustomers:
-    handler: functions/customers/getCustomers.default
+  deleteCustomer:
+    handler: functions/customers/deleteCustomer.default
+    events:
+      - httpApi:
+          path: /customers/{customerId}
+          method: delete
+  getCustomer:
+    handler: functions/customers/getCustomer.default
+    events:
+      - httpApi:
+          path: /customers/{customerId}
+          method: get
+  listCustomers:
+    handler: functions/customers/listCustomers.default
     events:
       - httpApi:
           path: /customers

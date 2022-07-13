@@ -4,16 +4,17 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "allowJs": false,
+    "esModuleInterop": true,  // import commonjs modules into es6 modules
     "target": "es2019",
     "outDir": ".build",
     "moduleResolution": "node",
     "module": "commonjs",
-    "lib": ["es2020"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "baseUrl": ".",
     "rootDir": ".",
-    "paths": {
-      "functions/": ["*"]
-    }
   },
   "exclude": [".vscode", ".serverless", ".git", "node_modules"]
 }
