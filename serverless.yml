@@ -10,10 +10,14 @@ plugins:
 provider:
   name: aws
 <<<<<<< HEAD
+<<<<<<< HEAD
   runtime: nodejs16.x
 =======
   runtime: nodejs14.x
 >>>>>>> RD-3 updated deprecated IAM syntax
+=======
+  runtime: nodejs16.x
+>>>>>>> RD-3 upgrade lambda node runtime to 16.x
   iam:
     role:
       statements:
