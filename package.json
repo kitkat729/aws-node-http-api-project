@@ -6,7 +6,6 @@
     "@types/aws-lambda": "^8.10.101",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.3",
-    "aws-sdk": "^2.1165.0",
     "jest": "^28.1.2",
     "serverless": "^3.19.0",
     "serverless-offline": "^8.8.0",
@@ -17,6 +16,8 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.128.0",
-    "@aws-sdk/lib-dynamodb": "^3.128.0"
+    "@aws-sdk/lib-dynamodb": "^3.128.0",
+    "aws-sdk": "^2.1173.0",
+    "uuid": "^8.3.2"
   }
 }
