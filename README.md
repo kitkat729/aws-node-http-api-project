@@ -18,6 +18,8 @@ This template does not initially include any kind of persistence (database). For
 
 The template setup AWS with Node 14.x runtime in serverless.yml
 
+The HttpApi integration implements APIGateway V2
+
 ## Usage
 
 ### Deployment
@@ -61,18 +63,34 @@ Which should result in response similar to the following (removed `input` conten
 
 ### Local development
 
-You can invoke your function locally by using the following command:
+You can invoke Lambdas locally by the following commands:
 
-```bash
-serverless invoke local --function hello
+Create example
+```
+serverless invoke local -f createCustomer -d '{"body":"{\"name\":\"Customer 20\",\"gender\":\"M\"}"}'
 ```
 
-Which should result in response similar to the following:
+List example
+```
+serverless invoke local -f listCustomers
+```
+
+Get example
+```
+serverless invoke local -f getCustomer -d '{"pathParameters":{"customerId":"Customer 20"}}'
+```
+
+Delete example
+```
+serverless invoke local -f deleteCustomer -d '{"pathParameters":{"customerId":"Customer 23"}}'
+```
+
+The getCustomer response should look similar to the following:
 
 ```
 {
-  "statusCode": 200,
-  "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
+    "statusCode": 200,
+    "body": "{\"name\":\"Customer 20\",\"gender\":\"M\"}"
 }
 ```
 
@@ -80,15 +98,75 @@ Which should result in response similar to the following:
 Alternatively, it is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
 
 ```bash
-serverless plugin install -n serverless-offline
+yarn add --dev serverless-offline
 ```
 
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
+You need to add `serverless-offline` under `plugins` in `serverless.yml`.
 
 After installation, you can start local emulation with:
 
 ```
-serverless offline
+serverless offline start
 ```
 
 To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
+
+You can call APIs locally by the following commands:
+Note: where a customer name is required in the url path, the customer name must be encoded with encodeURIComponent. For ex: `Customer%2022`
+
+Create example
+```
+curl --url http://localhost:3000/customers -d '{"name":"Customer 24","email":"customer24@gmail.com"}' -X POST -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+```
+
+List example
+```
+curl --url http://localhost:3000/customers -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+```
+
+Get example 
+```
+curl --url http://localhost:3000/customers/Customer%2022 -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+
+```
+
+Delete example
+```
+curl --url http://localhost:3000/customers/Customer25 -X DELETE -i -H 'Content-Type: application/json' -H 'Accept: application/json'
+```
+
+The GET /customers/Customer%2022 response should look similar to the following:
+
+```
+{"name":"Customer 22","email":"customer22@gmail.com"}
+```
+
+### Custom headers
+Lambda function can return custom headers by adding a `headers` property to the return object
+
+```
+{
+  statusCode: 200,
+  headers: {
+    "x-custom-1": "value-1",
+    "x-custom-2": "value-2"
+  }
+  body: JSON.stringify({...})
+}
+```
+
+### Api path
+To assign a named resource path to an api, update the httpApi's path attribute in `serverless.yml`
+
+```
+functions:
+  createCustomer:
+    handler: createCustomer.default
+    events:
+      - httpApi:
+          path: /<resource-name>
+```
+
+### Common issues
+- Get an error like below when calling API locally. It is because the local built output is missing. Make sure to run `serverless offline start` on a separate command console.
+{"errorMessage":"ENOENT: no such file or directory, scandir '/Users/hyuen/repos/aws-node-http-api-project/.build/functions/customers'",
