@@ -20,8 +20,12 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.128.0",
+<<<<<<< HEAD
     "@aws-sdk/lib-dynamodb": "^3.128.0",
     "aws-sdk": "^2.1173.0",
     "uuid": "^8.3.2"
+=======
+    "@aws-sdk/lib-dynamodb": "^3.128.0"
+>>>>>>> RD-3 fix dependencies; the @aws-sdk dependencies must be non-dev
   }
 }
