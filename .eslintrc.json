@@ -12,17 +12,7 @@
     "plugin:jest/recommended",
     "plugin:promise/recommended",
     "plugin:prettier/recommended"
-    //"prettier",
   ],
-  // settings: {
-  //    // Needed to resolve your own module for all or individual env      
-  //   "import/resolver": {
-  //     alias: {
-  //       map: [["jest", "./jest"]],
-  //       extensions: [".ts", ".js", ".jsx", ".tsx", ".json"],
-  //     },
-  //   },
-  // },
   "env": {
     "node": true,
     "jest": true
@@ -37,8 +27,6 @@
       "error",
       { "functions": false, "classes": true, "variables": true }
     ],
-    // Allow most functions to rely on type inference. If the function is exported, then `@typescript-eslint/explicit-module-boundary-types` will ensure it"s typed.
-    "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-use-before-define": [
       "error",
       { "functions": false, "classes": true, "variables": true, "typedefs": true }
