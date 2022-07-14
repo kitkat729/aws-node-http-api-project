@@ -1,0 +1,7 @@
+# the build folder
+.build
+
+# folders with auto-generated files
+.serverless
+
+node_modules
