@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import DEFAULT_DOCUMENT_TRANSLATE_CONFIG from '../../constants/dynamodb';
+import { defaultDocumentTranslateConfig } from '../../constants/dynamodb';
 
 /**
  * List customers
@@ -12,7 +12,7 @@ import DEFAULT_DOCUMENT_TRANSLATE_CONFIG from '../../constants/dynamodb';
  */
 const handler: APIGatewayProxyHandlerV2 = async (): Promise<APIGatewayProxyResultV2> => {
   const dbClient = new DynamoDBClient({});
-  const dbDocClient = DynamoDBDocumentClient.from(dbClient, DEFAULT_DOCUMENT_TRANSLATE_CONFIG);
+  const dbDocClient = DynamoDBDocumentClient.from(dbClient, defaultDocumentTranslateConfig);
 
   const command = new ScanCommand({
     TableName: process.env.DYNAMODB_CUSTOMER_TABLE,
