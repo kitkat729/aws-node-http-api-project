@@ -2,9 +2,6 @@ module.exports = {
   plugins: ['@typescript-eslint', 'jest', 'promise'],
   extends: [
     'airbnb-base',
-    'airbnb-typescript/base',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:jest/recommended',
     'plugin:promise/recommended',
     'plugin:prettier/recommended',
@@ -12,10 +9,6 @@ module.exports = {
   env: {
     node: true,
     jest: true,
-  },
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.eslint.json',
   },
   rules: {
     // Use function hoisting to improve code readability
@@ -45,6 +38,22 @@ module.exports = {
         // Allow CJS until ESM support improves
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+    {
+      files: ['*.ts'],
+      // The configs below contain rules that will require type info.
+      // parser and parserOptions.project are required. Using a parser,
+      // the linter will only lint files and files matched a glob pattern
+      // listed in the config's "include" field
+      extends: [
+        'airbnb-typescript/base',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: './tsconfig.json',
       },
     },
   ],
