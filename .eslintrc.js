@@ -16,7 +16,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.eslint.json',
-    sourceType: 'module',
   },
   rules: {
     // Use function hoisting to improve code readability
