@@ -5,11 +5,11 @@ const marshallOptions = {
   removeUndefinedValues: false, // false, by default.
   // Whether to convert typeof object to map attribute.
   convertClassInstanceToMap: false, // false, by default.
-}
+};
 
 const unmarshallOptions = {
   // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
   wrapNumbers: false, // false, by default.
-}
+};
 
-export const DEFAULT_DOCUMENT_TRANSLATE_CONFIG = { marshallOptions, unmarshallOptions }
+export default { marshallOptions, unmarshallOptions };
