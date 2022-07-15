@@ -11,11 +11,7 @@ import { Customer } from '../types';
  * @param {Context} context - Request context
  * @returns {APIGatewayProxyResultV2}
  */
-const handler: APIGatewayProxyHandlerV2 = async (
-  event,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  context,
-): Promise<APIGatewayProxyResultV2> => {
+const handler: APIGatewayProxyHandlerV2 = async (event): Promise<APIGatewayProxyResultV2> => {
   if (!event?.body) {
     return {
       statusCode: 400,

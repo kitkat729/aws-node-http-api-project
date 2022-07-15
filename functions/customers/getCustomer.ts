@@ -10,11 +10,7 @@ import DEFAULT_DOCUMENT_TRANSLATE_CONFIG from '../../constants/dynamodb';
  * @param {Context} context - Request context
  * @returns {APIGatewayProxyResultV2}
  */
-const handler: APIGatewayProxyHandlerV2 = async (
-  event,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  context,
-): Promise<APIGatewayProxyResultV2> => {
+const handler: APIGatewayProxyHandlerV2 = async (event): Promise<APIGatewayProxyResultV2> => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const primary_key = event?.pathParameters?.customerId;
 
