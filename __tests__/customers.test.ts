@@ -45,8 +45,8 @@ describe('customers', () => {
   afterAll(() => {
     process.env = OLD_ENV;
   });
-  describe(`getCustomer`, () => {
-    it(`should get correct data if customer exists`, async () => {
+  describe('getCustomer', () => {
+    it('should get correct data if customer exists', async () => {
       mockSend.mockResolvedValue({
         Item: {
           primary_key: 'Existing Customer',
@@ -79,7 +79,7 @@ describe('customers', () => {
       );
     });
 
-    it(`should get error if customer does not exist`, async () => {
+    it('should get error if customer does not exist', async () => {
       mockSend.mockResolvedValue({});
 
       const event = {
@@ -108,7 +108,7 @@ describe('customers', () => {
       );
     });
 
-    it(`should get error if required input is missing`, async () => {
+    it('should get error if required input is missing', async () => {
       const event = {
         pathParameters: null,
       } as unknown as APIGatewayProxyEventV2;
@@ -127,8 +127,8 @@ describe('customers', () => {
     });
   });
 
-  describe(`listCustomers`, () => {
-    it(`should get empty list`, async () => {
+  describe('listCustomers', () => {
+    it('should get empty list', async () => {
       mockSend.mockResolvedValue({
         Count: 0,
         Items: undefined,
@@ -156,7 +156,7 @@ describe('customers', () => {
       );
     });
 
-    it(`should get correct list`, async () => {
+    it('should get correct list', async () => {
       mockSend.mockResolvedValue({
         Count: 3,
         Items: [
@@ -189,8 +189,8 @@ describe('customers', () => {
     });
   });
 
-  describe(`createCustomer`, () => {
-    it(`should get error if input body is empty (null)`, async () => {
+  describe('createCustomer', () => {
+    it('should get error if input body is empty (null)', async () => {
       mockSend.mockResolvedValue(true);
 
       const event = {
@@ -212,7 +212,7 @@ describe('customers', () => {
       expect(mockSend).not.toBeCalled();
     });
 
-    it(`should get error if required input is missing`, async () => {
+    it('should get error if required input is missing', async () => {
       mockSend.mockResolvedValue(true);
 
       const event = {
@@ -234,7 +234,7 @@ describe('customers', () => {
       expect(mockSend).not.toBeCalled();
     });
 
-    it(`should get correct data after a new customer is created`, async () => {
+    it('should get correct data after a new customer is created', async () => {
       mockSend.mockResolvedValue(true);
 
       const event = {
@@ -249,7 +249,7 @@ describe('customers', () => {
       const expected = {
         statusCode: 201,
         headers: {
-          Location: `/customers/New%20Customer`,
+          Location: '/customers/New%20Customer',
         },
       };
       expect(result).toEqual(expected);
@@ -265,8 +265,8 @@ describe('customers', () => {
     });
   });
 
-  describe(`deleteCustomer`, () => {
-    it(`should delete record if record exists`, async () => {
+  describe('deleteCustomer', () => {
+    it('should delete record if record exists', async () => {
       mockSend.mockResolvedValue(true);
       const event = {
         pathParameters: {
@@ -296,7 +296,7 @@ describe('customers', () => {
      * the url. The request is simply not routable and the gateway will throw an error.
      * The lambda will only get an event if and only if a target id is present
      */
-    it(`should get error if required input is missing`, async () => {
+    it('should get error if required input is missing', async () => {
       const event = {
         pathParameters: null,
       } as unknown as APIGatewayProxyEventV2;
