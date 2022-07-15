@@ -15,10 +15,10 @@ import deleteCustomer from '../functions/customers/deleteCustomer';
 jest.mock('@aws-sdk/lib-dynamodb', () => {
   return {
     DynamoDBDocumentClient: jest.fn().mockImplementation(),
-    GetCommand: jest.fn().mockImplementation((input: GetCommandInput) => ({ input })),
-    ScanCommand: jest.fn().mockImplementation((input: ScanCommandInput) => ({ input })),
-    PutCommand: jest.fn().mockImplementation((input: PutCommandInput) => ({ input })),
-    DeleteCommand: jest.fn().mockImplementation((input: DeleteCommandInput) => ({ input })),
+    GetCommand: jest.fn().mockImplementation((input: GetCommandInput) => input),
+    ScanCommand: jest.fn().mockImplementation((input: ScanCommandInput) => input),
+    PutCommand: jest.fn().mockImplementation((input: PutCommandInput) => input),
+    DeleteCommand: jest.fn().mockImplementation((input: DeleteCommandInput) => input),
   };
 });
 
