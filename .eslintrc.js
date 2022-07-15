@@ -2,9 +2,6 @@ module.exports = {
   plugins: ['@typescript-eslint', 'jest', 'promise'],
   extends: [
     'airbnb-base',
-    'airbnb-typescript/base',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:jest/recommended',
     'plugin:promise/recommended',
     'plugin:prettier/recommended',
@@ -14,9 +11,6 @@ module.exports = {
     jest: true,
   },
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.eslint.json',
-  },
   rules: {
     // Use function hoisting to improve code readability
     'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
@@ -45,6 +39,17 @@ module.exports = {
         // Allow CJS until ESM support improves
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+    {
+      files: ['*.ts'],
+      extends: [
+        'airbnb-typescript/base',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
+      parserOptions: {
+        project: './tsconfig.eslint.json',
       },
     },
   ],
