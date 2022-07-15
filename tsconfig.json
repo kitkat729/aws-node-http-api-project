@@ -16,5 +16,11 @@
     "baseUrl": ".",
     "rootDir": ".",
   },
+  "include": [
+    "./functions/**/*",
+    "./constants/**/*",
+    "./__tests__/**/*",
+    "./jest/**/*"
+  ],
   "exclude": [".vscode", ".serverless", ".git", "node_modules"]
 }
