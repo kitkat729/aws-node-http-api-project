@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'path';
 
 const config = {
   rootDir: '..',
@@ -12,6 +12,6 @@ const config = {
       tsconfig: path.resolve(__dirname, '../tsconfig.json'),
     },
   },
-}
+};
 
-export default config
+export default config;
