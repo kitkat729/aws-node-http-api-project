@@ -10,7 +10,6 @@ module.exports = {
     node: true,
     jest: true,
   },
-  parser: '@typescript-eslint/parser',
   rules: {
     // Use function hoisting to improve code readability
     'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
@@ -43,13 +42,18 @@ module.exports = {
     },
     {
       files: ['*.ts'],
+      // The configs below contain rules that will require type info.
+      // parser and parserOptions.project are required. Using a parser,
+      // the linter will only lint files and files matched a glob pattern
+      // listed in the config's "include" field
       extends: [
         'airbnb-typescript/base',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
       ],
+      parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: './tsconfig.eslint.json',
+        project: './tsconfig.json',
       },
     },
   ],
