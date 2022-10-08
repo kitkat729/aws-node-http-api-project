@@ -13,10 +13,6 @@ module.exports = {
   rules: {
     // Use function hoisting to improve code readability
     'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
-    '@typescript-eslint/no-use-before-define': [
-      'error',
-      { functions: false, classes: true, variables: true, typedefs: true },
-    ],
     'no-unused-expressions': [
       'error',
       {
@@ -54,6 +50,15 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: './tsconfig.json',
+      },
+      rules: {
+        // must disable the base rule
+        // @link https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-use-before-define.md
+        'no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': [
+          'error',
+          { functions: false, classes: true, variables: true, typedefs: true },
+        ],
       },
     },
   ],
